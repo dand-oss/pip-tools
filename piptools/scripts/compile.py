@@ -99,6 +99,12 @@ def _determine_linesep(
     help="Allow resolving to prereleases (default is not)",
 )
 @click.option(
+    "--prefer-binary",
+    is_flag=True,
+    default=None,
+    help="Prefer older binary packages over newer source",
+)
+@click.option(
     "-r",
     "--rebuild",
     is_flag=True,
@@ -300,6 +306,7 @@ def cli(
     quiet: int,
     dry_run: bool,
     pre: bool,
+    prefer_binary: bool,
     rebuild: bool,
     extras: tuple[str, ...],
     all_extras: bool,
@@ -396,6 +403,8 @@ def cli(
         pip_args.extend(["--client-cert", client_cert])
     if pre:
         pip_args.extend(["--pre"])
+    if prefer_binary:
+        pip_args.extend(["--prefer-binary"])
     for host in trusted_host:
         pip_args.extend(["--trusted-host", host])
     if not build_isolation:
