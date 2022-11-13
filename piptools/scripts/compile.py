@@ -403,7 +403,7 @@ def cli(
     if client_cert:
         pip_args.extend(["--client-cert", client_cert])
     if verbose:
-        pip_args.extend(["--vvv"])
+        pip_args.extend(["-vvv"])
     if pre:
         pip_args.extend(["--pre"])
     if prefer_binary:
