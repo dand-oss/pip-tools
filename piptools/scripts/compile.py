@@ -8,13 +8,14 @@ import tempfile
 from typing import IO, Any, BinaryIO, cast
 
 import click
-from build import BuildBackendException
 from build.util import project_wheel_metadata
 from click.utils import LazyFile, safecall
 from pip._internal.commands import create_command
 from pip._internal.req import InstallRequirement
 from pip._internal.req.constructors import install_req_from_line
 from pip._internal.utils.misc import redact_auth_from_url
+
+from build import BuildBackendException
 
 from .._compat import IS_CLICK_VER_8_PLUS, parse_requirements
 from ..cache import DependencyCache
@@ -401,6 +402,8 @@ def cli(
         pip_args.extend(["--cert", cert])
     if client_cert:
         pip_args.extend(["--client-cert", client_cert])
+    if verbose:
+        pip_args.extend(["--vvv"])
     if pre:
         pip_args.extend(["--pre"])
     if prefer_binary:
